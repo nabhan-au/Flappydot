@@ -31,6 +31,9 @@ class FlappyGame(GameApp):
         self.dot = Dot(self, 'images/dot.png', CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2)
 
         self.elements.append(self.dot)
+    def create_sprites(self):
+        self.pillar_pair = Pillarpair(self, 'images/pillar-pair.png', CANVAS_WIDTH, CANVAS_HEIGHT//2)
+        self.elements.append(self.pillar_pair)
 
     def init_game(self):
         self.create_sprites()
@@ -42,6 +45,10 @@ class FlappyGame(GameApp):
         pass
 
     def on_key_pressed(self, event):
+        pass
+
+class Pillarpair(Sprite):
+    def update(self):
         pass
 
 

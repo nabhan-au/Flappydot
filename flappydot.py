@@ -6,11 +6,25 @@ CANVAS_WIDTH = 800
 CANVAS_HEIGHT = 500
 
 UPDATE_DELAY = 33
+STARTING_VELOCITY = -30 
 GRAVITY = 2.5
+JUMP_VELOCITY = -20
 
 class Dot(Sprite):
-    pass
+    def init_element(self):
+        self.vy = STARTING_VELOCITY
+        self.is_started = False 
 
+    def update(self):
+        if self.is_started:
+            self.y +=self.vy
+            self.vy += GRAVITY
+    
+    def start(self):
+        self.is_started = True
+    
+    def jump(self):
+        self.vu = JUMP_VELOCITY
 
 class FlappyGame(GameApp):
     def create_sprites(self):

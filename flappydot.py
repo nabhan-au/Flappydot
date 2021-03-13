@@ -30,24 +30,13 @@ class FlappyGame(GameApp):
     def create_sprites(self):
         self.dot = Dot(self, 'images/dot.png', CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2)
         self.elements.append(self.dot)
-        self.create_pillar()
-        # self.pillar_pair = Pillarpair(self, 'images/pillar-pair.png', CANVAS_WIDTH, CANVAS_HEIGHT//1)
-        # self.elements.append(self.pillar_pair)
+        self.create_pillar() # call method that will create pillar
+
     def create_pillar(self):
-        random_pillar_height = random.randint(0, 150) # random size of pillar
-        random_pillar_side = random.randint(1, 2) 
-        # random pillar side where random number is 1 pillar will top will take more space.
-        # if random number is 2 pillar bottom will take more space
-        if random_pillar_side == 1 :
-            self.pillar_top = Pillarpair(self, 'images/pillar-top.png', CANVAS_WIDTH, CANVAS_HEIGHT-600+random_pillar_height)
-            self.elements.append(self.pillar_top)
-            self.pillar_bottom = Pillarpair(self, 'images/pillar-bottom.png', CANVAS_WIDTH, CANVAS_HEIGHT+100+random_pillar_height)
-            self.elements.append(self.pillar_bottom)
-        elif random_pillar_side == 2 :
-            self.pillar_top = Pillarpair(self, 'images/pillar-top.png', CANVAS_WIDTH, CANVAS_HEIGHT-600-random_pillar_height)
-            self.elements.append(self.pillar_top)
-            self.pillar_bottom = Pillarpair(self, 'images/pillar-bottom.png', CANVAS_WIDTH, CANVAS_HEIGHT+100-random_pillar_height)
-            self.elements.append(self.pillar_bottom)
+        pillar_size = random.randint(150,350) # random which pillar will take more space
+        self.pillar_pair = Pillarpair(self, 'images/pillar-pair.png', CANVAS_WIDTH, CANVAS_HEIGHT-pillar_size)
+        self.elements.append(self.pillar_pair)
+
         
     def init_game(self):
         self.create_sprites()

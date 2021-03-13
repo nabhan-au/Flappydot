@@ -25,19 +25,23 @@ class Dot(Sprite):
     
     def jump(self):
         self.vy = JUMP_VELOCITY
+    
+    def is_out_of_screen(self): #method that check pillar position
+        return self.x, self.y
 
 class FlappyGame(GameApp):
     def create_sprites(self):
         self.dot = Dot(self, 'images/dot.png', CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2)
         self.elements.append(self.dot)
-        self.create_pillar() # call method that will create pillar
-
-    def create_pillar(self):
-        pillar_size = random.randint(150,350) # random which pillar will take more space
-        self.pillar_pair = Pillarpair(self, 'images/pillar-pair.png', CANVAS_WIDTH, CANVAS_HEIGHT-pillar_size)
+        self.pillar_pair = Pillarpair(self, 'images/pillar-pair.png', CANVAS_WIDTH, CANVAS_HEIGHT // 2)
         self.elements.append(self.pillar_pair)
 
+    def random_height(self): # method that random pillar height
+        h = random.randint(150,350)
+        self.new_pillar_pair = Pillarpair(self, 'images/pillar-pair.png', CANVAS_WIDTH, CANVAS_HEIGHT - h)
+        return self.new_pillar_pair
         
+
     def init_game(self):
         self.create_sprites()
 
@@ -45,8 +49,23 @@ class FlappyGame(GameApp):
         pass
 
     def post_update(self):
-        pass
-
+        a = ''
+        for i in self.elements:
+            if i == self.elements[1]:
+                x ,y = i.is_out_of_screen()
+                if x > 0:
+                    if x % 300 == 0:
+                        print(x)
+                        a = self.random_height()
+                elif x == 0:
+                    i.reset_position()
+            elif i != self.elements[0] and i != self.elements[1]:
+                x,y = i.is_out_of_screen()
+                if x < 0 :
+                    self.elements.remove(i)
+        if a != '':
+            self.elements.append(a)
+    
     def on_key_pressed(self, event):
         pass
 
@@ -54,15 +73,15 @@ class Pillarpair(Sprite):
     def update(self):
         self.x -= 5
 
-
     def is_out_of_screen(self): #method that check pillar position
-        return self.x , self.y
+        return self.x, self.y
 
-    def reset_position(self): #method that delete pillar that out of screen
-        pass
+    def reset_position(self): # method that delete pillar that out of screen
+        self.x = CANVAS_WIDTH
 
 
 if __name__ == "__main__":
+
     root = tk.Tk()
     root.title("Monkey Banana Game")
  

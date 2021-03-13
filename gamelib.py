@@ -108,7 +108,22 @@ class GameApp(ttk.Frame):
         pass
 
     def post_update(self):
-        pass
+        a = ''
+        for i in self.elements:
+            if i == self.elements[1]:
+                x ,y = i.is_out_of_screen()
+                if x > 0:
+                    if x % 300 == 0:
+                        print(x)
+                        a = self.random_height()
+                elif x == 0:
+                    i.reset_position()
+            elif i != self.elements[0] and i != self.elements[1]:
+                x,y = i.is_out_of_screen()
+                if x < 0 :
+                    self.elements.remove(i)
+        if a != '':
+            self.elements.append(a)
 
     def on_key_pressed(self, event):
         pass

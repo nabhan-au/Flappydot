@@ -49,22 +49,7 @@ class FlappyGame(GameApp):
         pass
 
     def post_update(self):
-        a = ''
-        for i in self.elements:
-            if i == self.elements[1]:
-                x ,y = i.is_out_of_screen()
-                if x > 0:
-                    if x % 300 == 0:
-                        print(x)
-                        a = self.random_height()
-                elif x == 0:
-                    i.reset_position()
-            elif i != self.elements[0] and i != self.elements[1]:
-                x,y = i.is_out_of_screen()
-                if x < 0 :
-                    self.elements.remove(i)
-        if a != '':
-            self.elements.append(a)
+        super().post_update()
     
     def on_key_pressed(self, event):
         pass
@@ -76,7 +61,7 @@ class Pillarpair(Sprite):
     def is_out_of_screen(self): #method that check pillar position
         return self.x, self.y
 
-    def reset_position(self): # method that delete pillar that out of screen
+    def reset_position(self): # method that move pillar that out of screen to right side 
         self.x = CANVAS_WIDTH
 
 

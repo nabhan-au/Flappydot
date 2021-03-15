@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.ttk as ttk
+from tkinter import messagebox
 
 class GameCanvasElement():
     def __init__(self, game_app, x=0, y=0):
@@ -114,16 +115,27 @@ class GameApp(ttk.Frame):
                 x ,y = i.is_out_of_screen()
                 if x > 0:
                     if x % 300 == 0:
-                        print(x)
                         a = self.random_height()
                 elif x == 0:
                     i.reset_position()
+            elif i == self.elements[0]:
+                x,y = i.is_out_of_screen()
+                if y > 500:
+                    messagebox.showinfo(title='Popup',
+                    message="You lose")
+                    self.destroy()
+                elif y < 0:
+                    messagebox.showinfo(title='Popup',
+                    message="You lose")
+                    self.destroy()
             elif i != self.elements[0] and i != self.elements[1]:
                 x,y = i.is_out_of_screen()
                 if x < 0 :
                     self.elements.remove(i)
         if a != '':
             self.elements.append(a)
+            if self.elements[1].is_started == True:
+                self.elements[-1].is_started = True
 
     def on_key_pressed(self, event):
         pass

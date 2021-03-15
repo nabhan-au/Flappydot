@@ -17,7 +17,7 @@ class Dot(Sprite):
 
     def update(self):
         if self.is_started:
-            self.y +=self.vy
+            self.y += self.vy
             self.vy += GRAVITY
     
     def start(self):
@@ -26,7 +26,7 @@ class Dot(Sprite):
     def jump(self):
         self.vy = JUMP_VELOCITY
     
-    def is_out_of_screen(self): #method that check pillar position
+    def is_out_of_screen(self):
         return self.x, self.y
 
 class FlappyGame(GameApp):
@@ -35,6 +35,8 @@ class FlappyGame(GameApp):
         self.elements.append(self.dot)
         self.pillar_pair = Pillarpair(self, 'images/pillar-pair.png', CANVAS_WIDTH, CANVAS_HEIGHT // 2)
         self.elements.append(self.pillar_pair)
+        
+
 
     def random_height(self): # method that random pillar height
         h = random.randint(150,350)
@@ -52,11 +54,17 @@ class FlappyGame(GameApp):
         super().post_update()
     
     def on_key_pressed(self, event):
-        pass
+        self.elements[0].start()
+        self.elements[0].jump()
+        self.elements[1].is_started = True
 
 class Pillarpair(Sprite):
+    def init_element(self):
+        self.is_started = False
+
     def update(self):
-        self.x -= 5
+        if self.is_started:
+            self.x -= 5
 
     def is_out_of_screen(self): #method that check pillar position
         return self.x, self.y

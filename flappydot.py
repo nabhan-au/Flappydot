@@ -33,29 +33,16 @@ class FlappyGame(GameApp):
     def create_sprites(self):
         self.dot = Dot(self, 'images/dot.png', CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2)
         self.elements.append(self.dot)
-        self.create_pillar()
-         # self.pillar_pair = Pillarpair(self, 'images/pillar-pair.png', CANVAS_WIDTH, CANVAS_HEIGHT//1)
-         # self.elements.append(self.pillar_pair)
-    def create_pillar(self):
-        random_pillar_height = self.random_height() # random size of pillar
-        random_pillar_side = random.randint(1, 2) 
-        # random pillar side where random number is 1 pillar will top will take more space.
-        # if random number is 2 pillar bottom will take more space
-        if random_pillar_side == 1 :
-            self.pillar_top = Pillarpair(self, 'images/pillar-top.png', CANVAS_WIDTH, CANVAS_HEIGHT-650+random_pillar_height)
-            self.elements.append(self.pillar_top)
-            self.pillar_bottom = Pillarpair(self, 'images/pillar-bottom.png', CANVAS_WIDTH, CANVAS_HEIGHT+150+random_pillar_height)
-            self.elements.append(self.pillar_bottom)
-        elif random_pillar_side == 2 :
-            self.pillar_top = Pillarpair(self, 'images/pillar-top.png', CANVAS_WIDTH, CANVAS_HEIGHT-650-random_pillar_height)
-            self.elements.append(self.pillar_top)
-            self.pillar_bottom = Pillarpair(self, 'images/pillar-bottom.png', CANVAS_WIDTH, CANVAS_HEIGHT+150-random_pillar_height)
-            self.elements.append(self.pillar_bottom)
+        self.pillar_pair = Pillarpair(self, 'images/pillar-pair.png', CANVAS_WIDTH, CANVAS_HEIGHT // 2)
+        self.elements.append(self.pillar_pair)
+        
 
 
     def random_height(self): # method that random pillar height
-        h = random.randint(0, 150)
-        return h
+        h = random.randint(150,350)
+        self.new_pillar_pair = Pillarpair(self, 'images/pillar-pair.png', CANVAS_WIDTH, CANVAS_HEIGHT - h )
+        return self.new_pillar_pair
+        
 
     def init_game(self):
         self.create_sprites()
@@ -69,9 +56,7 @@ class FlappyGame(GameApp):
     def on_key_pressed(self, event):
         self.elements[0].start()
         self.elements[0].jump()
-
         self.elements[1].is_started = True
-        self.elements[2].is_started = True
 
 class Pillarpair(Sprite):
     def init_element(self):

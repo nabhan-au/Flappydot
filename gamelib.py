@@ -109,14 +109,17 @@ class GameApp(ttk.Frame):
         pass
 
     def post_update(self):
-        a = ''
         for i in self.elements:
             if i == self.elements[1]:
                 x ,y = i.is_out_of_screen()
                 if x > 0:
                     if x % 300 == 0:
-                        a = self.random_height()
+                        self.create_pillar()
                 elif x == 0:
+                    i.reset_position()
+            elif i == self.elements[2]:
+                x,y = i.is_out_of_screen()
+                if x == 0:
                     i.reset_position()
             elif i == self.elements[0]:
                 x,y = i.is_out_of_screen()
@@ -128,13 +131,25 @@ class GameApp(ttk.Frame):
                     messagebox.showinfo(title='Popup',
                     message="You lose")
                     self.destroy()
-            elif i != self.elements[0] and i != self.elements[1]:
+                for i in self.elements:
+                    if i != self.elements[0]:
+                        x1 , y1 = i.is_out_of_screen()
+                        if x == x1 :
+                            if 'top' in i.image_filename:
+                                if y > y1:
+                                    print(y)
+                                    print(y1)
+                            elif 'bottom' in i.image_filename:
+                                if y < y1:
+                                    pass
+            elif i != self.elements[0] and i != self.elements[1] and i != self.elements[2]:
                 x,y = i.is_out_of_screen()
                 if x < 0 :
                     self.elements.remove(i)
-        if a != '':
-            self.elements.append(a)
-            
+
+            if self.elements[1].is_started == True and self.elements[2].is_started == True:
+                self.elements[-1].is_started = True
+                self.elements[-2].is_started = True
 
     def on_key_pressed(self, event):
         pass

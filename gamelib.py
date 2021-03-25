@@ -130,8 +130,8 @@ class GameApp(ttk.Frame):
                     self.destroy()
                 for i in range(1, len(self.elements)):
                     x1 , y1  = self.elements[i].is_out_of_screen()
-                    if x > x1 - 10 and x < x1 +10:
-                        if y > y1 + 100 or y < y1 -100:
+                    if x >= x1 - 40 and x <= x1 + 40:
+                        if y > y1 + 100 or y < y1 - 100:
                             messagebox.showinfo(title='Popup',
                             message="You lose")
                             self.destroy()
